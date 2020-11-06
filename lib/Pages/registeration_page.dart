@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterationPage extends StatefulWidget {
@@ -77,10 +78,15 @@ class _RegisterationPageState extends State<RegisterationPage> {
     );
   }
 
-  void btnRegister() {
+  void btnRegister() async {
     if (_frmRegisterKey.currentState.validate()) {
-      print(_emailController.text);
-      print(_passwordController.text);
+      final _user = (await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      ))
+          .user;
+
+      print(_user);
     }
   }
 }
