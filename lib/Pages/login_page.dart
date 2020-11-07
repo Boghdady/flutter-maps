@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_maps/Pages/map_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -75,10 +77,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void btnLogin() {
+  void btnLogin() async {
     if (_frmRegisterKey.currentState.validate()) {
-      print(_emailController.text);
-      print(_passwordController.text);
+      final user = (await FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: _emailController.text.trim(),
+              password: _passwordController.text.trim()))
+          .user;
+
+      if (user != null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MapPage()));
+      }
     }
   }
 }

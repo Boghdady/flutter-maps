@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_maps/Pages/map_page.dart';
 
 class RegisterationPage extends StatefulWidget {
   RegisterationPage({Key key}) : super(key: key);
@@ -69,7 +70,7 @@ class _RegisterationPageState extends State<RegisterationPage> {
                 RaisedButton(
                   onPressed: btnRegister,
                   child: Text("Register"),
-                )
+                ),
               ],
             ),
           ),
@@ -86,7 +87,10 @@ class _RegisterationPageState extends State<RegisterationPage> {
       ))
           .user;
 
-      print(_user);
+      if (_user != null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MapPage()));
+      }
     }
   }
 }
